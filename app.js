@@ -96,27 +96,18 @@ try {
     
     emmiter.on('readFile',(name_file)=>{
         try {
-          fs.readFile(path.join(position,name_file),'utf-8',(err,data)=>{
-              if(err){
-                  throw new Error('we have error with read file'+err);
-              }
-              console.log(data);
-          })
+          let data = fs.readFileSync(path.join(position,name_file),'utf-8');
+          console.log(data);
         } catch (error) {
-            console.log(error);
+            fconsole.log(error);
         }
     });
     emmiter.on('writeFile',(name_file,text)=>{
         try {
-            const data = new Uint8Array(Buffer.from(text));
-            fs.writeFile(path.join(position,name_file),data,(err)=>{
-                if(err){
-                    throw new Error('we have error with write to file');
-                }
-                else{
-                    console.log('write file succsesfull '+ data);
-                }
-            })
+            new_text = '\n'+ text;
+            const data = new Uint8Array(Buffer.from(new_text));
+            fs.appendFileSync(path.join(position,name_file),data);
+            console.log('write file succsesfull');
         } catch (error) {
             console.log(error)
         }
